@@ -2,6 +2,7 @@
     width: 90%;
     display: flex;
     gap:16px;
+    padding-top: 25vh;
 }
 .payment .order-col{
     width: 40%;

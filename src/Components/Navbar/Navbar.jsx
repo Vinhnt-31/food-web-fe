@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Navbar.css'
-import { assets } from '../../assets-local/assets';
+import { assets } from '../../assets/assets';
 import { Link, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 
@@ -10,9 +10,11 @@ const Navbar = ({ setShowLogin }) => {
   const { getTotalCartAmount, token, setToken } = useContext(StoreContext)
   const navigate = useNavigate()
   const [endWith, setEndWith] = useState(false)
-
+  console.log(token);
+  
   const logout = () => {
-    localStorage.removeItem('token')
+    // localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setToken("")
     navigate('/')
   }
@@ -23,12 +25,17 @@ const Navbar = ({ setShowLogin }) => {
     }, 100);
   }
 
+  useEffect(() => {
+    if(!token && localStorage.getItem('user')) {
+      setToken(localStorage.getItem('user'))
+    }
+  }, [])
 
   return (
     <div className='navbar'>
       <Link to='/'><img src={assets.logo} alt='' className="logo" onClick={() => checkUrl()} /></Link>
       <ul className='navbar-menu'>
-        <Link style={{ display: endWith }} to='/' onClick={() => setMenu('home')} className={menu === 'home' ? 'active' : ''}>Home</Link>
+        <a style={{ display: endWith }} href='#header' to='/' onClick={() => setMenu('home')} className={menu === 'home' ? 'active' : ''}>Home</a>
         <a style={{ display: endWith }} href='#explore-menu' onClick={() => setMenu('menu')} className={menu === 'menu' ? 'active' : ''}>menu</a>
         <a style={{ display: endWith }} href='#app-download' onClick={() => setMenu('mobile-app')} className={menu === 'mobile-app' ? 'active' : ''}>mobile app</a>
         <a style={{ display: endWith }} href='#footer' onClick={() => setMenu('contact-us')} className={menu === 'contact-us' ? 'active' : ''}>contact us</a>

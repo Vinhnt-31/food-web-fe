@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import './LoginPopup.css'
-import { assets } from '../../assets-local/assets'
+import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios';
 const LoginPopup = ({ setShowLogin }) => {
@@ -18,20 +18,28 @@ const LoginPopup = ({ setShowLogin }) => {
     }
     const onLogin = async (e) => {
         e.preventDefault()
-        let newUrl = url;
-        if (currState === 'Login') {
-            newUrl += '/api/user/login'
-        }else{
-            newUrl += '/api/user/register'
-        }
-        const res = await axios.post(newUrl, data)
-        if(res.data.success){
-            setToken(res.data.token)
-            localStorage.setItem('token', res.data.token)
+        // let newUrl = url;
+        // if (currState === 'Login') {
+        //     newUrl += '/api/user/login'
+        // }else{
+        //     newUrl += '/api/user/register'
+        // }
+        // const res = await axios.post(newUrl, data)
+        // if(res.data.success){
+        //     setToken(res.data.token)
+        //     localStorage.setItem('token', res.data.token)
+        //     setShowLogin(false)
+        // }else{
+        //     alert(res.data.message)
+        // }
+        if( data.email === 'test@gmail.com' && data.password === 'test1234'){
+            localStorage.setItem('user', data.email)
             setShowLogin(false)
+            setToken(data.email)
         }else{
-            alert(res.data.message)
+            alert('user or password false')
         }
+
     }
     return (
         <div className='login-popup'>

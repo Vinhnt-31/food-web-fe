@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import './Payment.css'
 import { StoreContext } from '../../context/StoreContext'
-import { assets } from '../../assets-local/assets'
+import { assets } from '../../assets/assets'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 
 const Payment = () => {
-    const { food_list, cartItem, url, getTotalCartAmount, } = useContext(StoreContext)
+    const { food_list, cartItem, url, getTotalCartAmount, VND} = useContext(StoreContext)
     const [payUrl, setPayUrl] = useState('')
     const handleOnChange = async (e) => {
         const paymentType = e.target.value
@@ -30,9 +30,9 @@ const Payment = () => {
                                 <img src={url + '/images/' + item.image} alt='' />
                                 <p>{item.name}</p>
                                 <div className="flex-col">
-                                    <p className='cart-item-info'>Price: {item.price}</p>
+                                    <p className='cart-item-info'>Price: {VND.format(item.price)}</p>
                                     <p className='cart-item-info'>Quantity: {cartItem[item._id]}</p>
-                                    <p className='cart-item-info'>Total: {item.price * cartItem[item._id]}</p>
+                                    <p className='cart-item-info'>Total: {VND.format(item.price * cartItem[item._id])}</p>
                                 </div>
                             </div>
                         )
@@ -45,17 +45,17 @@ const Payment = () => {
                     <div>
                         <div className="cart-total-detail">
                             <p>Subtotal</p>
-                            <p>$ {getTotalCartAmount()}</p>
+                            <p>{VND.format(getTotalCartAmount())}</p>
                         </div>
                         <hr />
                         <div className="cart-total-detail">
                             <p>Delivery Free</p>
-                            <p>$ {getTotalCartAmount() === 0 ? 0 : 2}</p>
+                            <p>{VND.format(getTotalCartAmount() === 0 ? 0 : 20000)}</p>
                         </div>
                         <hr />
                         <div className="cart-total-detail">
                             <p>Total</p>
-                            <p>$ {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</p>
+                            <p>{VND.format(getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 20000)}</p>
                         </div>
                     </div>
                 </div>

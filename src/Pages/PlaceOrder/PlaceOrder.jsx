@@ -3,7 +3,7 @@ import './PlaceOrder.css'
 import { StoreContext } from '../../context/StoreContext'
 import { useNavigate } from 'react-router-dom'
 const PlaceOrder = () => {
-  const {getTotalCartAmount, orderData,setOrderData} = useContext(StoreContext)
+  const {getTotalCartAmount, orderData,setOrderData, VND} = useContext(StoreContext)
   const navigate = useNavigate()
   const onChangeHandle = (e) => {
     const name = e.target.name;
@@ -39,17 +39,17 @@ const PlaceOrder = () => {
           <div>
           <div className="cart-total-detail">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>{VND.format(getTotalCartAmount())}</p>
             </div>
             <hr/>
             <div className="cart-total-detail">
               <p>Delivery Free</p>
-              <p>${getTotalCartAmount()===0?0:2}</p>
+              <p>{VND.format(getTotalCartAmount()===0?0:20000)}</p>
             </div>
             <hr/>
             <div className="cart-total-detail">
               <p>Total</p>
-              <p>${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</p>
+              <p>{VND.format(getTotalCartAmount()===0?0:getTotalCartAmount()+20000)}</p>
             </div>
           </div>
           <button type='submit'>PROCEED TO ORDER</button>
